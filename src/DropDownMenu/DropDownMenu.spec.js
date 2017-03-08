@@ -31,6 +31,15 @@ describe('<DropDownMenu />', () => {
     });
   });
 
+  describe('prop: disabled', () => {
+    it('should forward the property', () => {
+      const wrapper = shallowWithContext(
+        <DropDownMenu disabled={true} />
+      );
+      assert.strictEqual(wrapper.find('IconButton').prop('disabled'), true, 'should be disabled');
+    });
+  });
+
   describe('prop: children', () => {
     it('should work with null child', () => {
       const wrapper = shallowWithContext(
@@ -41,6 +50,23 @@ describe('<DropDownMenu />', () => {
       );
 
       assert.strictEqual(wrapper.childAt(0).childAt(0).childAt(0).node, 'Never');
+    });
+  });
+
+  describe('prop: iconButton', () => {
+    it('should render IconButton with given icon node', () => {
+      const iconNode = <div>test</div>;
+      const wrapper = shallowWithContext(
+        <DropDownMenu iconButton={iconNode} />
+      );
+      assert.strictEqual(wrapper.find(IconButton).childAt(0).node, iconNode);
+    });
+
+    it('should render IconButton with default icon node', () => {
+      const wrapper = shallowWithContext(
+        <DropDownMenu />
+      );
+      assert.strictEqual(wrapper.find(IconButton).childAt(0).node, DropDownMenu.defaultProps.iconButton);
     });
   });
 

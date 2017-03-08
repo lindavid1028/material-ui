@@ -111,6 +111,10 @@ class DropDownMenu extends Component {
      */
     disabled: PropTypes.bool,
     /**
+     * Overrides default `SvgIcon` dropdown arrow component.
+     */
+    iconButton: PropTypes.node,
+    /**
      * Overrides the styles of icon element.
      */
     iconStyle: PropTypes.object,
@@ -172,6 +176,7 @@ class DropDownMenu extends Component {
     animated: true,
     autoWidth: true,
     disabled: false,
+    iconButton: <DropDownArrow />,
     openImmediately: false,
     maxHeight: 500,
   };
@@ -304,6 +309,7 @@ class DropDownMenu extends Component {
       autoWidth,
       children,
       className,
+      disabled,
       iconStyle,
       labelStyle,
       listStyle,
@@ -316,9 +322,9 @@ class DropDownMenu extends Component {
       style,
       underlineStyle,
       value,
+      iconButton,
       ...other
     } = this.props;
-
     const {
       anchorEl,
       open,
@@ -358,7 +364,7 @@ class DropDownMenu extends Component {
             {displayValue}
           </div>
           <IconButton
-            tabIndex={this.props.disabled ? -1 : undefined}
+            disabled={disabled}
             onKeyDown={this.handleKeyDown}
             ref={(node) => {
               this.arrowNode = node;
@@ -366,7 +372,7 @@ class DropDownMenu extends Component {
             style={Object.assign({}, styles.icon, iconStyle)}
             iconStyle={styles.iconChildren}
           >
-            <DropDownArrow />
+            {iconButton}
           </IconButton>
           <div style={prepareStyles(Object.assign({}, styles.underline, underlineStyle))} />
         </ClearFix>
